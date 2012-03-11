@@ -8,7 +8,7 @@
     <ProjectGuid>{D2C52256-FBE3-4EF1-8D1E-245EC3298A1A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DwollaAPI</RootNamespace>
+    <RootNamespace>Dwolla.API</RootNamespace>
     <AssemblyName>DwollaAPI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -65,6 +65,8 @@
     <Compile Include="DwollaAPI\DwollaAPIException.cs" />
     <Compile Include="DwollaAPI\DwollaServiceException.cs" />
     <Compile Include="DwollaAPI\DwollaSpot.cs" />
+    <Compile Include="Enumeration.Generic.cs" />
+    <Compile Include="Enumeration.cs" />
     <Compile Include="DwollaAPI\RegisterUserResponse.cs" />
     <Compile Include="DwollaAPI\ResultObject.cs" />
     <Compile Include="DwollaAPI\Scope.cs" />
