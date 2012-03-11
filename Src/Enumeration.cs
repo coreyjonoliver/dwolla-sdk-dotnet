@@ -80,7 +80,7 @@ namespace Dwolla.API
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="Google.API.Enumeration"/> to <see cref="System.String"/>.
+        /// Performs an implicit conversion from <see cref="Dwolla.API.Enumeration"/> to <see cref="System.String"/>.
         /// </summary>
         /// <param name="enumeration">The enumeration.</param>
         /// <returns>The result of the conversion.</returns>

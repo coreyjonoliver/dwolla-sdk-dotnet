@@ -6,9 +6,15 @@
     [JsonObject]
     public class TransactionStat
     {
+        /// <summary>
+        /// Supplies the number of transactions for the specified period.
+        /// </summary>
         [JsonProperty("TransactionsCount")]
         public int TransactionsCount { get; internal set; }
 
+        /// <summary>
+        /// Supplied the total number of transactions for the specified period.
+        /// </summary>
         [JsonProperty("TransactionsTotal")]
         public decimal TransactionsTotal { get; internal set; }
     }
