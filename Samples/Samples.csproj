@@ -77,7 +77,9 @@
     <Content Include="Default.aspx" />
     <Content Include="AccountBalance.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountInformation.aspx.cs">

@@ -18,7 +18,7 @@ After building DwollaAPI.sln as described above, feel free to peruse and run the
 
 1.   Open the Samples.sln file in Visual Studio.
 2.   Define the `dwollaAppId` and `dwollaAppSecret` attributes in the `Web.config` file with your Dwolla application key and secret respectively.
-2.   Right-click on a desired web project and click `View in Browser`.
+2.   Right-click on the web project labeled `Samples` and click `View in Browser`.
 
 Usage
 -----
@@ -35,7 +35,7 @@ Create a variable of type `IAuthorizationState` which will store the authorizati
          
     IAuthorizationState authorization = client.ProcessUserAuthorization();
 
-Now you must request for user authorization from Dwolla while indicating the scope needed by any api calls you will make.
+Now you must request for user authorization from Dwolla while indicating the scope needed by any api calls you will make:
 
     client.RequestUserAuthorization(new Scope[] { Scope.REQUEST });
 

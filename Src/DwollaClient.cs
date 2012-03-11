@@ -206,11 +206,10 @@
         public BasicInformation BasicInformation(string client_id, string client_secret, string accountIdentifier)
         {
             NameValueCollection nvc = new NameValueCollection();
-            nvc.Add("accountIdentifier", accountIdentifier);
             nvc.Add("client_id", client_id);
             nvc.Add("client_secret", client_secret);
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/users" + ToQueryString(nvc));
+            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/users/" + accountIdentifier + ToQueryString(nvc));
             return GetResponseData<BasicInformation>(request);
         }
 
