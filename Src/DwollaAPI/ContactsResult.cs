@@ -4,7 +4,7 @@
     using Converters;
 
     [JsonObject]
-    public class Contact
+    public class ContactsResult
     {
         /// <summary>
         /// Supplies the contact identifier.

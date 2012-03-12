@@ -36,7 +36,7 @@
                 }
                 else
                 {
-                    foreach (Contact contact in contacts)
+                    foreach (ContactsResult contact in contacts)
                     {
                         var table = WebUIUtility.BuildFieldDescTable(
                         new Tuple<string, string>[] {

@@ -1,7 +1,7 @@
 ﻿namespace Dwolla.API
 {
     /// <summary>
-    /// Dwolla Contact types.
+    /// Dwolla ContactsResult types.
     /// </summary>
     public sealed class ContactType : Enumeration<ContactType>
     {

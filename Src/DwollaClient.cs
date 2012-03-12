@@ -64,7 +64,7 @@
         /// <param name="accessToken">The access token.</param>
         /// <returns>The contacts.
         /// </returns>
-        public IEnumerable<Contact> Contacts(string accessToken, string search = null, IEnumerable<ContactType> types = null, int? limit = null)
+        public IEnumerable<ContactsResult> Contacts(string accessToken, string search = null, IEnumerable<ContactType> types = null, int? limit = null)
         {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
@@ -73,7 +73,7 @@
             if (limit != null) nvc.Add("limit", limit.Value.ToString());
 
             var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/contacts" + ToQueryString(nvc));
-            return GetResponseData<IEnumerable<Contact>>(request);
+            return GetResponseData<IEnumerable<ContactsResult>>(request);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@
         /// <param name="limit">The number of spots to retrieve. Defaults to 10.</param>
         /// <returns>The nearby Dwolla spots.
         /// </returns>
-        public IEnumerable<DwollaSpot> Nearby(string clientId, string clientSecret, decimal latitude, decimal longitude, int? range = null, int? limit = null)
+        public IEnumerable<NearbyResult> Nearby(string clientId, string clientSecret, decimal latitude, decimal longitude, int? range = null, int? limit = null)
         {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("client_id", clientId);
@@ -100,7 +100,7 @@
             if (limit != null) nvc.Add("limit", limit.Value.ToString());
 
             var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/contacts/nearby" + ToQueryString(nvc));
-            return GetResponseData<IEnumerable<DwollaSpot>>(request);
+            return GetResponseData<IEnumerable<NearbyResult>>(request);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@
         /// <param name="organization">The company name for a commercial or non-profit account.</param>
         /// <param name="ein">The federal employer identification number for commercial or non-profit accounts.</param>
         /// <returns>The information about the registered user.</returns>
-        public RegisterUserResponse RegisterUser(
+        public RegisterUserResult RegisterUser(
             string clientId,
             string clientSecret,
             bool acceptTerms,
@@ -170,7 +170,7 @@
                 nvc.Add("acceptTerms", acceptTerms.ToString());
 
                 var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/register/" + ToQueryString(nvc));
-                return GetResponseData<RegisterUserResponse>(request);
+                return GetResponseData<RegisterUserResult>(request);
             }
         }
 
@@ -184,7 +184,7 @@
         /// <param name="skip">The number of transactions to skip. Defaults to 0.</param>
         /// <returns>The list of transactions.
         /// </returns>
-        public IEnumerable<Transaction> TransactionsListing(string accessToken, DateTime? sinceDate = null, IEnumerable<TransactionType> types = null, int? limit = null, int? skip = null)
+        public IEnumerable<TransactionsResult> TransactionsListing(string accessToken, DateTime? sinceDate = null, IEnumerable<TransactionType> types = null, int? limit = null, int? skip = null)
         {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
@@ -194,7 +194,7 @@
             if (skip != null) nvc.Add("skip", skip.Value.ToString());
 
             var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions" + ToQueryString(nvc));
-            return GetResponseData<IEnumerable<Transaction>>(request);
+            return GetResponseData<IEnumerable<TransactionsResult>>(request);
         }
 
         /// <summary>
@@ -204,14 +204,14 @@
         /// <param name="transactionId">The transaction identifer of the transaction being requested.</param>
         /// <returns>The transaction.
         /// </returns>
-        public IEnumerable<Transaction> TransactionsDetailsById(string accessToken, long transactionId)
+        public IEnumerable<TransactionsResult> TransactionsDetailsById(string accessToken, long transactionId)
         {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
             nvc.Add("transactionId", transactionId.ToString());
 
             var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions/" + ToQueryString(nvc));
-            return GetResponseData<IEnumerable<Transaction>>(request);
+            return GetResponseData<IEnumerable<TransactionsResult>>(request);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@
         /// <param name="endDate">The ending date and time for which to process transactions stats.</param>
         /// <returns>The transactions stats.
         /// </returns>
-        public TransactionStat TransactionsStats(string accessToken, IEnumerable<TransactionStatType> types = null, DateTime? startDate = null, DateTime? endDate = null)
+        public TransactionsStatsResult TransactionsStats(string accessToken, IEnumerable<TransactionStatsType> types = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
@@ -232,7 +232,7 @@
             if (endDate != null) nvc.Add("endDate", endDate.Value.ToString("d"));
 
             var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions/stats" + ToQueryString(nvc));
-            return GetResponseData<TransactionStat>(request);
+            return GetResponseData<TransactionsStatsResult>(request);
         }
 
         /// <summary>
@@ -306,13 +306,13 @@
         /// </summary>
         /// <param name="accessToken">The access token.</param>
         /// <returns>The account information.</returns>
-        public AccountInformation AccountInformation(string accessToken)
+        public AccountInformationResult AccountInformation(string accessToken)
         {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
 
             var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/users" + ToQueryString(nvc));
-            return GetResponseData<AccountInformation>(request);
+            return GetResponseData<AccountInformationResult>(request);
         }
 
         /// <summary>
@@ -322,14 +322,14 @@
         /// <param name="client_secret">The consumer secret for the application.</param>
         /// <param name="accountIdentifier">The Dwolla account identifier or email address of the Dwolla account.</param>
         /// <returns></returns>
-        public BasicInformation BasicInformation(string client_id, string client_secret, string accountIdentifier)
+        public BasicInformationResult BasicInformation(string client_id, string client_secret, string accountIdentifier)
         {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("client_id", client_id);
             nvc.Add("client_secret", client_secret);
 
             var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/users/" + accountIdentifier + ToQueryString(nvc));
-            return GetResponseData<BasicInformation>(request);
+            return GetResponseData<BasicInformationResult>(request);
         }
 
         private static string ToQueryString(NameValueCollection nvc)

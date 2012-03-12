@@ -28,7 +28,7 @@
             {
                 var transactionstat = client.TransactionsStats(
                     authorization.AccessToken,
-                    new TransactionStatType[] { TransactionStatType.TRANSACTIONSCOUNT, TransactionStatType.TRANSACTIONSTOTAL },
+                    new TransactionStatsType[] { TransactionStatsType.TRANSACTIONSCOUNT, TransactionStatsType.TRANSACTIONSTOTAL },
                     new DateTime(2011, 6, 1),
                     new DateTime(2011, 6, 15));
 

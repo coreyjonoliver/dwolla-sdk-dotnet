@@ -11,7 +11,7 @@ namespace Dwolla.API.Converters
     using Newtonsoft.Json.Utilities;
 
     /// <summary>
-    /// Converts a string to a <see cref="TransactionStatus"/>.
+    /// Converts a string to a <see cref="TransactionsStatusResult"/>.
     /// </summary>
     public class TransactionStatusConverter : JsonConverter
     {
@@ -76,16 +76,16 @@ namespace Dwolla.API.Converters
             if (string.IsNullOrEmpty(transactionStatusText) && nullable)
                 return null;
 
-            if (transactionStatusText == TransactionStatus.PROCESSED.Value)
-                return TransactionStatus.PROCESSED;
-            else if (transactionStatusText == TransactionStatus.PENDING.Value)
-                return TransactionStatus.PENDING;
-            else if (transactionStatusText == TransactionStatus.CANCELLED.Value)
-                return TransactionStatus.CANCELLED;
-            else if (transactionStatusText == TransactionStatus.FAILED.Value)
-                return TransactionStatus.FAILED;
-            else if (transactionStatusText == TransactionStatus.RECLAIMED.Value)
-                return TransactionStatus.RECLAIMED;
+            if (transactionStatusText == TransactionsStatusResult.PROCESSED.Value)
+                return TransactionsStatusResult.PROCESSED;
+            else if (transactionStatusText == TransactionsStatusResult.PENDING.Value)
+                return TransactionsStatusResult.PENDING;
+            else if (transactionStatusText == TransactionsStatusResult.CANCELLED.Value)
+                return TransactionsStatusResult.CANCELLED;
+            else if (transactionStatusText == TransactionsStatusResult.FAILED.Value)
+                return TransactionsStatusResult.FAILED;
+            else if (transactionStatusText == TransactionsStatusResult.RECLAIMED.Value)
+                return TransactionsStatusResult.RECLAIMED;
             else
                 throw new Exception(string.Format("Unexpected option {0}.", transactionStatusText));
         }
@@ -99,7 +99,7 @@ namespace Dwolla.API.Converters
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(TransactionStatus);
+            return objectType == typeof(TransactionsStatusResult);
         }
     }
 }

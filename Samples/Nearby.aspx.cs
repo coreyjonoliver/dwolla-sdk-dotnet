@@ -29,7 +29,7 @@
             }
             else
             {
-                foreach (DwollaSpot spot in nearby)
+                foreach (NearbyResult spot in nearby)
                 {
                     var table = WebUIUtility.BuildFieldDescTable(
                     new Tuple<string, string>[] {

@@ -4,7 +4,7 @@
     using Newtonsoft.Json;
 
     [JsonObject]
-    public class TransactionStat
+    public class TransactionsStatsResult
     {
         /// <summary>
         /// Supplies the number of transactions for the specified period.

@@ -5,7 +5,7 @@
     using System.Collections.Generic;
 
     [JsonObject]
-    public class DwollaSpot
+    public class NearbyResult
     {
         /// <summary>
         /// Supplies the Dwolla account identifier.

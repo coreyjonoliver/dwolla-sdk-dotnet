@@ -1,7 +1,7 @@
 ﻿namespace Dwolla.API
 {
     /// <summary>
-    /// Dwolla Transaction types.
+    /// Dwolla TransactionsResult types.
     /// </summary>
     public sealed class TransactionType : Enumeration<TransactionType>
     {

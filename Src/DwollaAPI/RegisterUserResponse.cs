@@ -4,7 +4,7 @@
     using Converters;
 
     [JsonObject]
-    public class RegisterUserResponse
+    public class RegisterUserResult
     {
         /// <summary>
         /// Supplies the Dwolla account indentifier.

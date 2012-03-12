@@ -5,7 +5,7 @@
     using Converters;
 
     [JsonObject]
-    public class Transaction
+    public class TransactionsResult
     {
         /// <summary>
         /// Supplies the transaction identifier.
@@ -69,7 +69,7 @@
         /// </summary>
         [JsonProperty("Status")]
         [JsonConverter(typeof(TransactionStatusConverter))]
-        public TransactionStatus Status { get; internal set; }
+        public TransactionsStatusResult Status { get; internal set; }
 
         /// <summary>
         ///  Supplies the expected clearing date of the transaction.

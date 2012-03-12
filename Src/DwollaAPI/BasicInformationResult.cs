@@ -4,7 +4,7 @@
     using Converters;
 
     [JsonObject]
-    public class BasicInformation
+    public class BasicInformationResult
     {
         /// <summary>
         /// Supplies the Dwolla account identifier.

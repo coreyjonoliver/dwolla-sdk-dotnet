@@ -36,7 +36,7 @@
                 }
                 else
                 {
-                    foreach (Transaction transaction in transactions)
+                    foreach (TransactionsResult transaction in transactions)
                     {
                         var table = WebUIUtility.BuildFieldDescTable(
                         new Tuple<string, string>[] {
