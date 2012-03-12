@@ -14,6 +14,9 @@
     using Newtonsoft.Json;
     using System.IO;
 
+    /// <summary>
+    /// An OAuth 2.0 consumer designed for utilizing the Dwolla REST API.
+    /// </summary>
     public class DwollaClient : WebServerClient
     {
         private static readonly AuthorizationServerDescription DwollaDescription = new AuthorizationServerDescription
@@ -31,11 +34,21 @@
             this.AuthorizationTracker = new TokenManager();
         }
 
+        /// <summary>
+        /// Prepares a request for user authorization from the Dwolla authorization server.
+        /// </summary>
+        /// <param name="scopes">The scopes of authorized access requested.</param>
         public void RequestUserAuthorization(IEnumerable<Scope> scopes)
         {
             RequestUserAuthorization(scopes.Select(s => s.Value));
         }
 
+        /// <summary>
+        /// Gets the account balance for the user for the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <returns>The account balance.
+        /// </returns>
         public decimal AccountBalance(string accessToken)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -45,6 +58,12 @@
             return GetResponseData<decimal>(request);
         }
 
+        /// <summary>
+        /// Gets contacts for the user for the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <returns>The contacts.
+        /// </returns>
         public IEnumerable<Contact> Contacts(string accessToken, string search = null, IEnumerable<ContactType> types = null, int? limit = null)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -57,6 +76,19 @@
             return GetResponseData<IEnumerable<Contact>>(request);
         }
 
+        /// <summary>
+        /// Gets nearby Dwolla spots within the <c>range</c> of the <c>latitude</c> and <c>longitude</c>. 
+        /// Half of the <c>limit</c> are returned with closest proximity. The other half of the spots are 
+        /// returned as random spots within the <c>range</c>.
+        /// </summary>
+        /// <param name="clientId">The consumer key for the application.</param>
+        /// <param name="clientSecret">The consumer secret for the application.</param>
+        /// <param name="latitude">The current latitude.</param>
+        /// <param name="longitude">The current longitude.</param>
+        /// <param name="range">The range to retrieve spots for in miles. Defaults to 10 miles.</param>
+        /// <param name="limit">The number of spots to retrieve. Defaults to 10.</param>
+        /// <returns>The nearby Dwolla spots.
+        /// </returns>
         public IEnumerable<DwollaSpot> Nearby(string clientId, string clientSecret, decimal latitude, decimal longitude, int? range = null, int? limit = null)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -71,6 +103,28 @@
             return GetResponseData<IEnumerable<DwollaSpot>>(request);
         }
 
+        /// <summary>
+        /// Registers a new Dwolla user account.
+        /// </summary>
+        /// <param name="clientId">The consumer key for the application.</param>
+        /// <param name="clientSecret">The consumer secret for the application.</param>
+        /// <param name="acceptTerms">The indication of acceptance/rejection of the Dwolla terms of service.</param>
+        /// <param name="email">The email address for the new Dwolla acount.</param>
+        /// <param name="password">The password for the new Dwolla account.</param>
+        /// <param name="pin">The pin for the new Dwolla account.</param>
+        /// <param name="firstName">The first name of the user.</param>
+        /// <param name="lastName">The last name of the user.</param>
+        /// <param name="city">The city.</param>
+        /// <param name="state">The state code.</param>
+        /// <param name="zip">The postal code or zip code.</param>
+        /// <param name="phone">The primary phone number of the user.</param>
+        /// <param name="dateOfBirth">The date of birth of the user.</param>
+        /// <param name="address">The first line of the user's address.</param>
+        /// <param name="address2">The second line of the user's address.</param>
+        /// <param name="type">The account type of the new user.</param>
+        /// <param name="organization">The company name for a commercial or non-profit account.</param>
+        /// <param name="ein">The federal employer identification number for commercial or non-profit accounts.</param>
+        /// <returns>The information about the registered user.</returns>
         public RegisterUserResponse RegisterUser(
             string clientId,
             string clientSecret,
@@ -91,7 +145,6 @@
             string organization = null,
             int? ein = null)
         {
-            // currently returns a 405 error
             if (type != AccountInformationType.PERSONAL && (organization == null || ein == null))
                 throw new ArgumentException("Organization or EIN field not specified for non-Personal type user");
             else
@@ -121,6 +174,16 @@
             }
         }
 
+        /// <summary>
+        /// Gets a list of transactions for the user for the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="sinceDate">The earliest date and time for which to retrieve transactions. Defaults to 7 days prior to current date.</param>
+        /// <param name="types">The transaction types to retrieve. Defaults to include all transaction types.</param>
+        /// <param name="limit">The number of transactions to retreive. Defaults to 10.</param>
+        /// <param name="skip">The number of transactions to skip. Defaults to 0.</param>
+        /// <returns>The list of transactions.
+        /// </returns>
         public IEnumerable<Transaction> TransactionsListing(string accessToken, DateTime? sinceDate = null, IEnumerable<TransactionType> types = null, int? limit = null, int? skip = null)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -134,6 +197,13 @@
             return GetResponseData<IEnumerable<Transaction>>(request);
         }
 
+        /// <summary>
+        /// Gets transaction by identifier for the user authorized for the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="transactionId">The transaction identifer of the transaction being requested.</param>
+        /// <returns>The transaction.
+        /// </returns>
         public IEnumerable<Transaction> TransactionsDetailsById(string accessToken, long transactionId)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -144,6 +214,15 @@
             return GetResponseData<IEnumerable<Transaction>>(request);
         }
 
+        /// <summary>
+        /// Gets transactions stats for the user for the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="types">The types of status to retrieve. Default to include all stats.</param>
+        /// <param name="startDate">The starting date and time for which to process transactions stats.</param>
+        /// <param name="endDate">The ending date and time for which to process transactions stats.</param>
+        /// <returns>The transactions stats.
+        /// </returns>
         public TransactionStat TransactionsStats(string accessToken, IEnumerable<TransactionStatType> types = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -156,6 +235,21 @@
             return GetResponseData<TransactionStat>(request);
         }
 
+        /// <summary>
+        /// Send funds to a destination for the user associated with the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="pin">The user's PIN associated with their account.</param>
+        /// <param name="destinationId">The identification of the user to send funds to.</param>
+        /// <param name="destinationType">The type of destination user.</param>
+        /// <param name="amount">THe amount of funds to transfer to the destination user.</param>
+        /// <param name="facilitatorAmount">The amount of the facilitator fee to override. 
+        /// Only applicable if the facilitor fee is enabled. If set to 0, facilitator fee 
+        /// is disabled for transaction. Cannot exceet 25% of the <c>amount</c></param>
+        /// <param name="assumeCost"> The indication of whether the user will assume the Dwolla fee. 
+        /// If false, the destination user will assume the Dwolla fee. Defaults to false.</param>
+        /// <param name="notes">The note to attach to the transaction</param>
+        /// <returns>The identifier of the successful transaction.</returns>
         public long Send(
             string accessToken,
             int pin,
@@ -179,6 +273,19 @@
             return GetResponseData<long>(request);
         }
 
+        /// <summary>
+        /// Gets funds from the source user for the user associated with the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="pin">The user's PIN associated with their account.</param>
+        /// <param name="sourceId">The identification of the user to request funds from.</param>
+        /// <param name="amount">The amount of funds to request from the source user.</param>
+        /// <param name="sourceType">The type of the source user.</param>
+        /// <param name="facilitatorAmount">The amount of the facilitator fee to override. 
+        /// Only applicable if the faciliator fee featue is enabled. If set to 0, facilitator 
+        /// fee is disabled for request. Cannot exceed 25% of the <c>amount</c>.</param>
+        /// <param name="notes">The note to attach to the transaction.</param>
+        /// <returns>The identifier of the successful request.</returns>
         public long Request(string accessToken, int pin, string sourceId, decimal amount, UserType sourceType = null, decimal? facilitatorAmount = null, string notes = null)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -194,6 +301,11 @@
             return GetResponseData<long>(request);
         }
 
+        /// <summary>
+        /// Gets the account information for the user associated with the authorized access token.
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <returns>The account information.</returns>
         public AccountInformation AccountInformation(string accessToken)
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -203,6 +315,13 @@
             return GetResponseData<AccountInformation>(request);
         }
 
+        /// <summary>
+        /// Gets the basic information for the Dwolla account associated with the account identifier.
+        /// </summary>
+        /// <param name="client_id">The consumer key for the application.</param>
+        /// <param name="client_secret">The consumer secret for the application.</param>
+        /// <param name="accountIdentifier">The Dwolla account identifier or email address of the Dwolla account.</param>
+        /// <returns></returns>
         public BasicInformation BasicInformation(string client_id, string client_secret, string accountIdentifier)
         {
             NameValueCollection nvc = new NameValueCollection();
