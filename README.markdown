@@ -44,9 +44,4 @@ If authorized by the user, you can now perform any desired set of actions allowe
 
     var request = client.Request(authorization.AccessToken, 1111, "812-111-1111", 1, UserType.DWOLLA, null, "Test");
 
-Todo
------
-
-*   Add method/class documentation  
-
 [1]: https://www.dwolla.com/developers
