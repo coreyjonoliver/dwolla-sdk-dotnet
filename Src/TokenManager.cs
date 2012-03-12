@@ -1,9 +1,9 @@
-﻿//-----------------------------------------------------------------------
+﻿﻿//-----------------------------------------------------------------------
 // <copyright file="TokenManager.cs" company="Andrew Arnott">
 //     Copyright (c) Andrew Arnott. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-
+﻿
 namespace Dwolla {
 	using System;
 	using DotNetOpenAuth.OAuth2;

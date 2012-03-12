@@ -1,6 +1,6 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="DwollaException.cs" company="iron9light">
-// Copyright (c) 2010 iron9light
+﻿﻿//-----------------------------------------------------------------------
+// <copyright file="DeserializeException.cs">
+// Copyright (c) 2012 Corey Oliver
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // </copyright>
-// <author>iron9light@gmail.com</author>
+// <author>corey.jon.oliver@gmail.com</author>
 //-----------------------------------------------------------------------
 
 namespace Dwolla.API

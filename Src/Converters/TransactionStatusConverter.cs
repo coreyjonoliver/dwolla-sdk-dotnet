@@ -1,4 +1,29 @@
-﻿using System;
+﻿﻿//-----------------------------------------------------------------------
+// <copyright file="TransactionStatusConverter.cs">
+// Copyright (c) 2012 Corey Oliver
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+// </copyright>
+// <author>corey.jon.oliver@gmail.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Globalization;
 using Newtonsoft.Json.Utilities;
 
@@ -11,7 +36,7 @@ namespace Dwolla.API.Converters
     using Newtonsoft.Json.Utilities;
 
     /// <summary>
-    /// Converts a string to a <see cref="TransactionsStatusResult"/>.
+    /// Converts a string to a <see cref="TransactionStatusType"/>.
     /// </summary>
     public class TransactionStatusConverter : JsonConverter
     {
@@ -76,16 +101,16 @@ namespace Dwolla.API.Converters
             if (string.IsNullOrEmpty(transactionStatusText) && nullable)
                 return null;
 
-            if (transactionStatusText == TransactionsStatusResult.PROCESSED.Value)
-                return TransactionsStatusResult.PROCESSED;
-            else if (transactionStatusText == TransactionsStatusResult.PENDING.Value)
-                return TransactionsStatusResult.PENDING;
-            else if (transactionStatusText == TransactionsStatusResult.CANCELLED.Value)
-                return TransactionsStatusResult.CANCELLED;
-            else if (transactionStatusText == TransactionsStatusResult.FAILED.Value)
-                return TransactionsStatusResult.FAILED;
-            else if (transactionStatusText == TransactionsStatusResult.RECLAIMED.Value)
-                return TransactionsStatusResult.RECLAIMED;
+            if (transactionStatusText == TransactionStatusType.PROCESSED.Value)
+                return TransactionStatusType.PROCESSED;
+            else if (transactionStatusText == TransactionStatusType.PENDING.Value)
+                return TransactionStatusType.PENDING;
+            else if (transactionStatusText == TransactionStatusType.CANCELLED.Value)
+                return TransactionStatusType.CANCELLED;
+            else if (transactionStatusText == TransactionStatusType.FAILED.Value)
+                return TransactionStatusType.FAILED;
+            else if (transactionStatusText == TransactionStatusType.RECLAIMED.Value)
+                return TransactionStatusType.RECLAIMED;
             else
                 throw new Exception(string.Format("Unexpected option {0}.", transactionStatusText));
         }
@@ -99,7 +124,7 @@ namespace Dwolla.API.Converters
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(TransactionsStatusResult);
+            return objectType == typeof(TransactionStatusType);
         }
     }
 }

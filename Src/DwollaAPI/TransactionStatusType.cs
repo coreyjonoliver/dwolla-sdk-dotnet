@@ -1,5 +1,5 @@
 ﻿﻿//-----------------------------------------------------------------------
-// <copyright file="ContactType.cs">
+// <copyright file="TransactionStatusType.cs">
 // Copyright (c) 2012 Corey Oliver
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,58 +26,53 @@
 namespace Dwolla.API
 {
     /// <summary>
-    /// Dwolla ContactsResult types.
+    /// Dwolla TransactionsResult statuses.
     /// </summary>
-    public sealed class ContactType : Enumeration<ContactType>
+    public sealed class TransactionStatusType : Enumeration<TransactionStatusType>
     {
         /// <summary>
-        /// All contact type.
+        /// Processed transaction status.
         /// </summary>
-        public static readonly ContactType ALL = new ContactType("All");
+        public static readonly TransactionStatusType PROCESSED = new TransactionStatusType("processed");
 
         /// <summary>
-        /// Twitter contact type.
+        /// Pending transaction status.
         /// </summary>
-        public static readonly ContactType TWITTER = new ContactType("Twitter");
+        public static readonly TransactionStatusType PENDING = new TransactionStatusType("pending");
 
         /// <summary>
-        /// Facebook contact type.
+        /// Cancelled transaction status.
         /// </summary>
-        public static readonly ContactType FACEBOOK = new ContactType("Facebook");
+        public static readonly TransactionStatusType CANCELLED = new TransactionStatusType("cancelled");
 
         /// <summary>
-        /// LinkedIn contact type.
+        /// Failed transaction status.
         /// </summary>
-        public static readonly ContactType LINKEDIN = new ContactType("LinkedIn");
+        public static readonly TransactionStatusType FAILED = new TransactionStatusType("failed");
 
         /// <summary>
-        /// Dwolla contact type.
+        /// Reclaimed transaction status.
         /// </summary>
-        public static readonly ContactType DWOLLA = new ContactType("Dwolla");
+        public static readonly TransactionStatusType RECLAIMED = new TransactionStatusType("reclaimed");
 
-        /// <summary>
-        /// Foursquare contact type.
-        /// </summary>
-        public static readonly ContactType FOURSQUARE = new ContactType("Foursquare");
-
-        private ContactType(string value)
+        private TransactionStatusType(string value)
             : base(value)
         {
         }
 
-        private ContactType(string name, string value)
+        private TransactionStatusType(string name, string value)
             : base(name, value)
         {
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="ContactType"/>.
+        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="TransactionStatusType"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator ContactType(string value)
+        public static implicit operator TransactionStatusType(string value)
         {
-            return Convert(value, s => new ContactType(s));
+            return Convert(value, s => new TransactionStatusType(s));
         }
     }
 }

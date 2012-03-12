@@ -1,4 +1,4 @@
-﻿﻿//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="DwollaAPIException.cs" company="iron9light">
 // Copyright (c) 2010 iron9light
 //
@@ -22,6 +22,7 @@
 // </copyright>
 // <author>iron9light@gmail.com</author>
 //-----------------------------------------------------------------------
+
 namespace Dwolla.API
 {
     using System;
