@@ -76,6 +76,9 @@ namespace Dwolla
         /// </returns>
         public decimal AccountBalance(string accessToken)
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
 
@@ -91,6 +94,9 @@ namespace Dwolla
         /// </returns>
         public IEnumerable<ContactsResult> Contacts(string accessToken, string search = null, IEnumerable<ContactType> types = null, int? limit = null)
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
             if (search != null) nvc.Add("search", search);
@@ -116,6 +122,11 @@ namespace Dwolla
         /// </returns>
         public IEnumerable<NearbyResult> Nearby(string clientId, string clientSecret, decimal latitude, decimal longitude, int? range = null, int? limit = null)
         {
+            if (String.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId");
+            if (String.IsNullOrEmpty(clientSecret))
+                throw new ArgumentNullException("clientSecret");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("client_id", clientId);
             nvc.Add("client_secret", clientSecret);
@@ -170,33 +181,52 @@ namespace Dwolla
             string organization = null,
             int? ein = null)
         {
+
+            if (String.IsNullOrEmpty(clientId))
+                throw new ArgumentNullException("clientId");
+            if (String.IsNullOrEmpty(clientSecret))
+                throw new ArgumentNullException("clientSecret");
+            if (String.IsNullOrEmpty(email))
+                throw new ArgumentNullException("email");
+            if (String.IsNullOrEmpty(password))
+                throw new ArgumentNullException("password");
+            if (String.IsNullOrEmpty(firstName))
+                throw new ArgumentNullException("firstname");
+            if (String.IsNullOrEmpty(lastName))
+                throw new ArgumentNullException("lastName");
+            if (String.IsNullOrEmpty(city))
+                throw new ArgumentNullException("city");
+            if (String.IsNullOrEmpty(state))
+                throw new ArgumentNullException("state");
+            if (String.IsNullOrEmpty(zip))
+                throw new ArgumentNullException("zip");
+            if (String.IsNullOrEmpty(address))
+                throw new ArgumentNullException("address");
             if (type != AccountInformationType.PERSONAL && (organization == null || ein == null))
                 throw new ArgumentException("Organization or EIN field not specified for non-Personal type user");
-            else
-            {
-                NameValueCollection nvc = new NameValueCollection();
-                nvc.Add("client_id", clientId);
-                nvc.Add("client_secret", clientSecret);
-                nvc.Add("email", email);
-                nvc.Add("password", password);
-                nvc.Add("pin", pin.ToString());
-                nvc.Add("firstName", firstName);
-                nvc.Add("lastName", lastName);
-                nvc.Add("address", address);
-                if (address2 != null) nvc.Add("address2", address2);
-                nvc.Add("city", city);
-                nvc.Add("state", state);
-                nvc.Add("zip", zip);
-                nvc.Add("phone", phone.ToString());
-                nvc.Add("dateOfBirth", dateOfBirth.ToString("d"));
-                if (type != null) nvc.Add("type", type.Value);
-                if (organization != null) nvc.Add("organization", organization);
-                if (ein != null) nvc.Add("ein", ein.ToString());
-                nvc.Add("acceptTerms", acceptTerms.ToString());
 
-                var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/register/" + ToQueryString(nvc));
-                return GetResponseData<RegisterUserResult>(request);
-            }
+            NameValueCollection nvc = new NameValueCollection();
+            nvc.Add("client_id", clientId);
+            nvc.Add("client_secret", clientSecret);
+            nvc.Add("email", email);
+            nvc.Add("password", password);
+            nvc.Add("pin", pin.ToString());
+            nvc.Add("firstName", firstName);
+            nvc.Add("lastName", lastName);
+            nvc.Add("address", address);
+            if (address2 != null) nvc.Add("address2", address2);
+            nvc.Add("city", city);
+            nvc.Add("state", state);
+            nvc.Add("zip", zip);
+            nvc.Add("phone", phone.ToString());
+            nvc.Add("dateOfBirth", dateOfBirth.ToString("d"));
+            if (type != null) nvc.Add("type", type.Value);
+            if (organization != null) nvc.Add("organization", organization);
+            if (ein != null) nvc.Add("ein", ein.ToString());
+            nvc.Add("acceptTerms", acceptTerms.ToString());
+
+            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/register/" + ToQueryString(nvc));
+            return GetResponseData<RegisterUserResult>(request);
         }
 
         /// <summary>
@@ -211,6 +241,9 @@ namespace Dwolla
         /// </returns>
         public IEnumerable<TransactionsResult> TransactionsListing(string accessToken, DateTime? sinceDate = null, IEnumerable<TransactionType> types = null, int? limit = null, int? skip = null)
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
             if (sinceDate != null) nvc.Add("sinceDate", sinceDate.Value.ToString("d"));
@@ -231,6 +264,9 @@ namespace Dwolla
         /// </returns>
         public IEnumerable<TransactionsResult> TransactionsDetailsById(string accessToken, long transactionId)
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
             nvc.Add("transactionId", transactionId.ToString());
@@ -250,6 +286,9 @@ namespace Dwolla
         /// </returns>
         public TransactionsStatsResult TransactionsStats(string accessToken, IEnumerable<TransactionStatsType> types = null, DateTime? startDate = null, DateTime? endDate = null)
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
             if (types != null) nvc.Add("types", string.Join(",", types.Select(t => t.Value)));
@@ -286,6 +325,11 @@ namespace Dwolla
             string notes = null
             )
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+            if (String.IsNullOrEmpty(destinationId))
+                throw new ArgumentNullException("destinationId");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
             if (destinationType != null) nvc.Add("destinationType", destinationType.Value);
@@ -313,6 +357,11 @@ namespace Dwolla
         /// <returns>The identifier of the successful request.</returns>
         public long Request(string accessToken, int pin, string sourceId, decimal amount, UserType sourceType = null, decimal? facilitatorAmount = null, string notes = null)
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+            if (String.IsNullOrEmpty(sourceId))
+                throw new ArgumentNullException("sourceId");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
             nvc.Add("pin", pin.ToString());
@@ -333,6 +382,9 @@ namespace Dwolla
         /// <returns>The account information.</returns>
         public AccountInformationResult AccountInformation(string accessToken)
         {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
 
@@ -349,6 +401,13 @@ namespace Dwolla
         /// <returns></returns>
         public BasicInformationResult BasicInformation(string client_id, string client_secret, string accountIdentifier)
         {
+            if (String.IsNullOrEmpty(client_id))
+                throw new ArgumentNullException("clientId");
+            if (String.IsNullOrEmpty(client_secret))
+                throw new ArgumentNullException("clientSecret");
+            if (String.IsNullOrEmpty(accountIdentifier))
+                throw new ArgumentNullException("accountIdentifier");
+
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("client_id", client_id);
             nvc.Add("client_secret", client_secret);
