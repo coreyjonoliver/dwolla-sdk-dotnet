@@ -64,6 +64,7 @@
     <Compile Include="DwollaAPI\DeserializeException.cs" />
     <Compile Include="DwollaAPI\DwollaAPIException.cs" />
     <Compile Include="DwollaAPI\DwollaServiceException.cs" />
+    <Compile Include="DwollaAPI\FundingSourcesListingResult.cs" />
     <Compile Include="DwollaAPI\NearbyResult.cs" />
     <Compile Include="Enumeration.Generic.cs" />
     <Compile Include="Enumeration.cs" />

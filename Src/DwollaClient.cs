@@ -23,6 +23,8 @@
 // <author>corey.jon.oliver@gmail.com</author>
 //-----------------------------------------------------------------------
 
+using Dwolla.API.DwollaAPI;
+
 namespace Dwolla
 {
     using System;
@@ -471,6 +473,31 @@ namespace Dwolla
         public BasicInformationResult BasicInformation(string accountIdentifier)
         {
             return BasicInformation(ClientIdentifier, ClientSecret, accountIdentifier);
+        }
+
+
+        public IEnumerable<FundingSourcesListingResult> FundingSources(string accessToken)
+        {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
+            NameValueCollection nvc = new NameValueCollection();
+            nvc.Add("oauth_token", accessToken);
+            
+            var request = WebRequest.Create(BaseUrl + "/fundingsources" + ToQueryString(nvc));
+            return GetResponseData<IEnumerable<FundingSourcesListingResult>>(request);
+        }
+
+        public IEnumerable<FundingSourcesListingResult> FundingSourcesDetails(string accessToken, string fundingSourceId)
+        {
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ArgumentNullException("accessToken");
+
+            NameValueCollection nvc = new NameValueCollection();
+            nvc.Add("oauth_token", accessToken);
+
+            var request = WebRequest.Create(string.Format("{0}/fundingsources/{1}{2}", BaseUrl, fundingSourceId, ToQueryString(nvc)));
+            return GetResponseData<IEnumerable<FundingSourcesListingResult>>(request);
         }
 
         private static string ToQueryString(NameValueCollection nvc)
