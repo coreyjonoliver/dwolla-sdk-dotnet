@@ -33,17 +33,17 @@ namespace Dwolla.API
         /// <summary>
         /// Personal account type.
         /// </summary>
-        public static readonly AccountInformationType PERSONAL = new AccountInformationType("Personal", "personal");
+        public static readonly AccountInformationType PERSONAL = new AccountInformationType("Personal", "Personal");
 
         /// <summary>
         /// Commercial account type.
         /// </summary>
-        public static readonly AccountInformationType COMMERCIAL= new AccountInformationType("Commercial", "commercial");
+        public static readonly AccountInformationType COMMERCIAL= new AccountInformationType("Commercial", "Commercial");
 
         /// <summary>
         /// Nonprofit account type.
         /// </summary>
-        public static readonly AccountInformationType NONPROFIT = new AccountInformationType("Nonprofit", "nonprofit");
+        public static readonly AccountInformationType NONPROFIT = new AccountInformationType("Nonprofit", "Nonprofit");
 
         private AccountInformationType(string value)
             : base(value)

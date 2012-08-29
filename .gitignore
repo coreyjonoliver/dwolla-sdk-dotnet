@@ -1,2 +1,7 @@
 *.suo
 *.user
+Bin*
+
+*.ncrunch*
+Src/obj*
+*[R|r]esharper*
