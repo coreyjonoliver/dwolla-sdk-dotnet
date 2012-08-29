@@ -43,7 +43,7 @@ namespace Dwolla.API
         /// <summary>
         /// Nonprofit account type.
         /// </summary>
-        public static readonly AccountInformationType NONPROFIT = new AccountInformationType("Nonprofit", "Nonprofit");
+        public static readonly AccountInformationType NONPROFIT = new AccountInformationType("NonProfit", "NonProfit");
 
         private AccountInformationType(string value)
             : base(value)
