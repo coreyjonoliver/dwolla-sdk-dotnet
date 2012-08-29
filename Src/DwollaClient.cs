@@ -44,6 +44,15 @@ namespace Dwolla
     /// </summary>
     public class DwollaClient : WebServerClient
     {
+        public string ClientIdentifier { get; set; }
+        public string ClientSecret { get; set; }
+
+        private string _baseUrl;
+        public string BaseUrl
+        {
+            get { return _baseUrl ?? (_baseUrl = "https://www.dwolla.com/oauth/rest"); }
+        }
+
         private static readonly AuthorizationServerDescription DwollaDescription = new AuthorizationServerDescription
         {
             TokenEndpoint = new Uri("https://www.dwolla.com/oauth/v2/token"),
@@ -57,6 +66,12 @@ namespace Dwolla
             : base(DwollaDescription)
         {
             this.AuthorizationTracker = new TokenManager();
+        }
+
+        public DwollaClient(String baseUrl) : base(DwollaDescription)
+        {
+            this.AuthorizationTracker = new TokenManager();
+            _baseUrl = baseUrl;
         }
 
         /// <summary>
@@ -82,8 +97,13 @@ namespace Dwolla
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/balance" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/balance" + ToQueryString(nvc));
             return GetResponseData<decimal>(request);
+        }
+
+        public decimal AccountBalance()
+        {
+            return AccountBalance(ClientIdentifier);
         }
 
         /// <summary>
@@ -103,8 +123,13 @@ namespace Dwolla
             if (types != null) nvc.Add("types", string.Join(",", types.Select(t => t.Value)));
             if (limit != null) nvc.Add("limit", limit.Value.ToString());
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/contacts" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/contacts" + ToQueryString(nvc));
             return GetResponseData<IEnumerable<ContactsResult>>(request);
+        }
+
+        public IEnumerable<ContactsResult> Contacts(string search = null, IEnumerable<ContactType> types = null, int? limit = null)
+        {
+            return Contacts(ClientIdentifier, search, types, limit);
         }
 
         /// <summary>
@@ -135,8 +160,13 @@ namespace Dwolla
             if (range != null) nvc.Add("range", range.Value.ToString());
             if (limit != null) nvc.Add("limit", limit.Value.ToString());
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/contacts/nearby" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/contacts/nearby" + ToQueryString(nvc));
             return GetResponseData<IEnumerable<NearbyResult>>(request);
+        }
+
+        public IEnumerable<NearbyResult> Nearby(decimal latitude, decimal longitude, int? range = null, int? limit = null)
+        {
+            return Nearby(ClientIdentifier, ClientSecret, latitude, longitude, range, limit);
         }
 
         /// <summary>
@@ -225,8 +255,30 @@ namespace Dwolla
             if (ein != null) nvc.Add("ein", ein.ToString());
             nvc.Add("acceptTerms", acceptTerms.ToString());
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/register/" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/register/" + ToQueryString(nvc));
             return GetResponseData<RegisterUserResult>(request);
+        }
+
+        public RegisterUserResult RegisterUser(
+            bool acceptTerms,
+            string email,
+            string password,
+            int pin,
+            string firstName,
+            string lastName,
+            string city,
+            string state,
+            string zip,
+            long phone,
+            DateTime dateOfBirth,
+            string address,
+            string address2 = null,
+            AccountInformationType type = null,
+            string organization = null,
+            int? ein = null)
+        {
+            return RegisterUser(ClientIdentifier, ClientSecret, acceptTerms, email, password, pin, firstName, lastName,
+                                city, state, zip, phone, dateOfBirth, address, address2, type, organization, ein);
         }
 
         /// <summary>
@@ -251,10 +303,10 @@ namespace Dwolla
             if (limit != null) nvc.Add("limit", limit.Value.ToString());
             if (skip != null) nvc.Add("skip", skip.Value.ToString());
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/transactions" + ToQueryString(nvc));
             return GetResponseData<IEnumerable<TransactionsResult>>(request);
         }
-
+        
         /// <summary>
         /// Gets transaction by identifier for the user authorized for the authorized access token.
         /// </summary>
@@ -271,7 +323,7 @@ namespace Dwolla
             nvc.Add("oauth_token", accessToken);
             nvc.Add("transactionId", transactionId.ToString());
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions/" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/transactions/" + ToQueryString(nvc));
             return GetResponseData<IEnumerable<TransactionsResult>>(request);
         }
 
@@ -295,7 +347,7 @@ namespace Dwolla
             if (startDate != null) nvc.Add("startDate", startDate.Value.ToString("d"));
             if (endDate != null) nvc.Add("endDate", endDate.Value.ToString("d"));
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions/stats" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/transactions/stats" + ToQueryString(nvc));
             return GetResponseData<TransactionsStatsResult>(request);
         }
 
@@ -338,7 +390,7 @@ namespace Dwolla
             if (assumeCost != null) nvc.Add("assumeCosts", assumeCost.Value.ToString());
             if (notes != null) nvc.Add("notes", notes);
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions/send" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/transactions/send" + ToQueryString(nvc));
             return GetResponseData<long>(request);
         }
 
@@ -371,7 +423,7 @@ namespace Dwolla
             if (facilitatorAmount != null) nvc.Add("facilitatorAmount", facilitatorAmount.Value.ToString());
             if (notes != null) nvc.Add("notes", notes);
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/transactions/request" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/transactions/request" + ToQueryString(nvc));
             return GetResponseData<long>(request);
         }
 
@@ -388,7 +440,7 @@ namespace Dwolla
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("oauth_token", accessToken);
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/users" + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/users" + ToQueryString(nvc));
             return GetResponseData<AccountInformationResult>(request);
         }
 
@@ -412,8 +464,13 @@ namespace Dwolla
             nvc.Add("client_id", client_id);
             nvc.Add("client_secret", client_secret);
 
-            var request = WebRequest.Create("https://www.dwolla.com/oauth/rest/users/" + accountIdentifier + ToQueryString(nvc));
+            var request = WebRequest.Create(BaseUrl + "/users/" + accountIdentifier + ToQueryString(nvc));
             return GetResponseData<BasicInformationResult>(request);
+        }
+
+        public BasicInformationResult BasicInformation(string accountIdentifier)
+        {
+            return BasicInformation(ClientIdentifier, ClientSecret, accountIdentifier);
         }
 
         private static string ToQueryString(NameValueCollection nvc)
