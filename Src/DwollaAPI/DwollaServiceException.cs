@@ -25,7 +25,7 @@
 
 namespace Dwolla.API
 {
-    internal class DwollaServiceException : DwollaAPIException
+    public class DwollaServiceException : DwollaAPIException
     {
         public DwollaServiceException(bool responseSuccess, string responseMessage)
         {
