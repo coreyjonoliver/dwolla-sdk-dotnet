@@ -19,5 +19,8 @@ namespace Dwolla.API.DwollaAPI
 
         [JsonProperty("Verified")]
         public bool Verified { get; set; }
+
+        [JsonProperty("ProcessingType")]
+        public BankProcessingType BankProcessingType { get; set; }
     }
 }

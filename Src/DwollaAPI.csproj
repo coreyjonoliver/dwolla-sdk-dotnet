@@ -58,6 +58,7 @@
     <Compile Include="Converters\TransactionUserTypeConverter.cs" />
     <Compile Include="DwollaAPI\AccountInformationResult.cs" />
     <Compile Include="DwollaAPI\AccountInformationType.cs" />
+    <Compile Include="DwollaAPI\BankProcessingType.cs" />
     <Compile Include="DwollaAPI\BasicInformationResult.cs" />
     <Compile Include="DwollaAPI\ContactsResult.cs" />
     <Compile Include="DwollaAPI\ContactType.cs" />
