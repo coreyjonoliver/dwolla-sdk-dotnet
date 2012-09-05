@@ -22,5 +22,8 @@ namespace Dwolla.API.DwollaAPI
 
         [JsonProperty("ProcessingType")]
         public BankProcessingType BankProcessingType { get; set; }
+
+        [JsonProperty("Balance")]
+        public decimal? Balance { get; set; }
     }
 }

@@ -488,7 +488,7 @@ namespace Dwolla
             return GetResponseData<IEnumerable<FundingSourcesListingResult>>(request);
         }
 
-        public IEnumerable<FundingSourcesListingResult> FundingSourcesDetails(string accessToken, string fundingSourceId)
+        public FundingSourcesListingResult FundingSourcesDetails(string accessToken, string fundingSourceId)
         {
             if (String.IsNullOrEmpty(accessToken))
                 throw new ArgumentNullException("accessToken");
@@ -497,7 +497,7 @@ namespace Dwolla
             nvc.Add("oauth_token", accessToken);
 
             var request = WebRequest.Create(string.Format("{0}/fundingsources/{1}{2}", BaseUrl, fundingSourceId, ToQueryString(nvc)));
-            return GetResponseData<IEnumerable<FundingSourcesListingResult>>(request);
+            return GetResponseData<FundingSourcesListingResult>(request);
         }
 
         private static string ToQueryString(NameValueCollection nvc)
