@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwollaAPI", "Src\DwollaAPI.csproj", "{D2C52256-FBE3-4EF1-8D1E-245EC3298A1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwollaApi", "Src\DwollaApi.csproj", "{D2C52256-FBE3-4EF1-8D1E-245EC3298A1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

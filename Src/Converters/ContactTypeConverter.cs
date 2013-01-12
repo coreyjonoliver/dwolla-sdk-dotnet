@@ -1,4 +1,4 @@
-﻿﻿//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="ContactTypeConverter.cs">
 // Copyright (c) 2012 Corey Oliver
 //
@@ -25,16 +25,11 @@
 
 using System;
 using System.Globalization;
-using Newtonsoft.Json.Utilities;
+using DwollaApi.Dwolla;
+using Newtonsoft.Json;
 
-namespace Dwolla.API.Converters
+namespace DwollaApi.Converters
 {
-    using System;
-    using System.Globalization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using Newtonsoft.Json.Utilities;
-
     /// <summary>
     /// Converts a string to a <see cref="ContactType"/>.
     /// </summary>
@@ -47,12 +42,7 @@ namespace Dwolla.API.Converters
                 throw new ArgumentNullException("t");
             }
 
-            if (t.IsValueType)
-            {
-                return IsNullableType(t);
-            }
-
-            return true;
+            return !t.IsValueType || IsNullableType(t);
         }
 
         internal static bool IsNullableType(Type t)
@@ -62,7 +52,7 @@ namespace Dwolla.API.Converters
                 throw new ArgumentNullException("t");
             }
 
-            return (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>));
+            return (t.IsGenericType && t.GetGenericTypeDefinition() == typeof (Nullable<>));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -78,43 +68,43 @@ namespace Dwolla.API.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+                                        JsonSerializer serializer)
         {
             bool nullable = IsNullableType(objectType);
-            Type t = (nullable)
-              ? Nullable.GetUnderlyingType(objectType)
-              : objectType;
 
             if (reader.TokenType == JsonToken.Null)
             {
                 if (!IsNullableType(objectType))
-                    throw new Exception(string.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.", objectType));
+                    throw new Exception(string.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.",
+                                                      objectType));
 
                 return null;
             }
 
             if (reader.TokenType != JsonToken.String)
-                throw new Exception(string.Format(CultureInfo.InvariantCulture, "Unexpected token parsing contact type. Expected String, got {0}.", reader.TokenType));
+                throw new Exception(string.Format(CultureInfo.InvariantCulture,
+                                                  "Unexpected token parsing contact type. Expected String, got {0}.",
+                                                  reader.TokenType));
 
             string contactTypeText = reader.Value.ToString();
 
             if (string.IsNullOrEmpty(contactTypeText) && nullable)
                 return null;
 
-            if (contactTypeText == ContactType.ALL.Value)
-                return ContactType.ALL;
-            else if (contactTypeText == ContactType.TWITTER.Value)
-                return ContactType.TWITTER;
-            else if (contactTypeText == ContactType.FACEBOOK.Value)
-                return ContactType.FACEBOOK;
-            else if (contactTypeText == ContactType.LINKEDIN.Value)
-                return ContactType.LINKEDIN;
-            else if (contactTypeText == ContactType.DWOLLA.Value)
-                return ContactType.DWOLLA;
-            else if (contactTypeText == ContactType.FOURSQUARE.Value)
-                return ContactType.FOURSQUARE;
-            else
-                throw new Exception(string.Format("Unexpected option {0}.", contactTypeText));
+            if (contactTypeText == ContactType.All.Value)
+                return ContactType.All;
+            if (contactTypeText == ContactType.Twitter.Value)
+                return ContactType.Twitter;
+            if (contactTypeText == ContactType.Facebook.Value)
+                return ContactType.Facebook;
+            if (contactTypeText == ContactType.Linkedin.Value)
+                return ContactType.Linkedin;
+            if (contactTypeText == ContactType.Dwolla.Value)
+                return ContactType.Dwolla;
+            if (contactTypeText == ContactType.Foursquare.Value)
+                return ContactType.Foursquare;
+            throw new Exception(string.Format("Unexpected option {0}.", contactTypeText));
         }
 
         /// <summary>
@@ -126,7 +116,7 @@ namespace Dwolla.API.Converters
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(ContactType);
+            return objectType == typeof (ContactType);
         }
     }
 }

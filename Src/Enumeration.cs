@@ -23,17 +23,17 @@
 // <author>iron9light@gmail.com</author>
 //-----------------------------------------------------------------------
 
-namespace Dwolla.API
-{
-    using System.Diagnostics;
+using System.Diagnostics;
 
+namespace DwollaApi
+{
     /// <summary>
     /// The enumeration. For parameters of Dwolla APIs.
     /// </summary>
     public abstract class Enumeration
     {
-        private readonly string name;
-        private readonly string value;
+        private readonly string _name;
+        private readonly string _value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Enumeration"/> class.
@@ -51,8 +51,8 @@ namespace Dwolla.API
         /// <param name="value">The value.</param>
         protected Enumeration(string name, string value)
         {
-            this.name = name;
-            this.value = value;
+            _name = name;
+            _value = value;
         }
 
         /// <summary>
@@ -61,10 +61,7 @@ namespace Dwolla.API
         /// <value>The value.</value>
         public string Value
         {
-            get
-            {
-                return this.value;
-            }
+            get { return _value; }
         }
 
         /// <summary>
@@ -73,14 +70,11 @@ namespace Dwolla.API
         /// <value>The name.</value>
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get { return _name; }
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="Dwolla.API.Enumeration"/> to <see cref="System.String"/>.
+        /// Performs an implicit conversion from <see cref="DwollaApi.Enumeration"/> to <see cref="System.String"/>.
         /// </summary>
         /// <param name="enumeration">The enumeration.</param>
         /// <returns>The result of the conversion.</returns>
@@ -122,12 +116,12 @@ namespace Dwolla.API
                 return false;
             }
 
-            if (!this.GetType().IsInstanceOfType(obj))
+            if (!GetType().IsInstanceOfType(obj))
             {
                 return false;
             }
 
-            return this.Value == ((Enumeration)obj).Value;
+            return Value == ((Enumeration) obj).Value;
         }
 
         /// <summary>
@@ -138,9 +132,9 @@ namespace Dwolla.API
         /// </returns>
         public override int GetHashCode()
         {
-            Debug.Assert(this.Value != null, "Value cannot be null.");
+            Debug.Assert(Value != null, "Value cannot be null.");
 
-            return this.Value.GetHashCode();
+            return Value.GetHashCode();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿﻿//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="GroupConverter.cs">
 // Copyright (c) 2012 Corey Oliver
 //
@@ -24,18 +24,12 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
-using Newtonsoft.Json.Utilities;
+using Newtonsoft.Json;
 
-namespace Dwolla.API.Converters
+namespace DwollaApi.Converters
 {
-    using System;
-    using System.Globalization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using Newtonsoft.Json.Utilities;
-    using System.Collections.Generic;
-
     /// <summary>
     /// Converts a comma seperated string to <see cref="IEnumerable"/> of string.
     /// </summary>
@@ -48,12 +42,7 @@ namespace Dwolla.API.Converters
                 throw new ArgumentNullException("t");
             }
 
-            if (t.IsValueType)
-            {
-                return IsNullableType(t);
-            }
-
-            return true;
+            return !t.IsValueType || IsNullableType(t);
         }
 
         internal static bool IsNullableType(Type t)
@@ -63,7 +52,7 @@ namespace Dwolla.API.Converters
                 throw new ArgumentNullException("t");
             }
 
-            return (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>));
+            return (t.IsGenericType && t.GetGenericTypeDefinition() == typeof (Nullable<>));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -79,30 +68,31 @@ namespace Dwolla.API.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+                                        JsonSerializer serializer)
         {
             bool nullable = IsNullableType(objectType);
-            Type t = (nullable)
-              ? Nullable.GetUnderlyingType(objectType)
-              : objectType;
 
             if (reader.TokenType == JsonToken.Null)
             {
                 if (!IsNullableType(objectType))
-                    throw new Exception(string.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.", objectType));
+                    throw new Exception(string.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.",
+                                                      objectType));
 
                 return null;
             }
 
             if (reader.TokenType != JsonToken.String)
-                throw new Exception(string.Format(CultureInfo.InvariantCulture, "Unexpected token parsing contact type. Expected String, got {0}.", reader.TokenType));
+                throw new Exception(string.Format(CultureInfo.InvariantCulture,
+                                                  "Unexpected token parsing contact type. Expected String, got {0}.",
+                                                  reader.TokenType));
 
             string groupText = reader.Value.ToString();
 
             if (string.IsNullOrEmpty(groupText) && nullable)
                 return null;
 
-            return groupText.Split(new char[] { ',' });
+            return groupText.Split(new[] {','});
         }
 
         /// <summary>
@@ -114,7 +104,7 @@ namespace Dwolla.API.Converters
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(IEnumerable<string>);
+            return objectType == typeof (IEnumerable<string>);
         }
     }
 }

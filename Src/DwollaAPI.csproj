@@ -8,8 +8,8 @@
     <ProjectGuid>{D2C52256-FBE3-4EF1-8D1E-245EC3298A1A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dwolla.API</RootNamespace>
-    <AssemblyName>DwollaAPI</AssemblyName>
+    <RootNamespace>DwollaApi</RootNamespace>
+    <AssemblyName>DwollaApi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -56,28 +56,28 @@
     <Compile Include="Converters\TransactionStatusConverter.cs" />
     <Compile Include="Converters\TransactionTypeConverter.cs" />
     <Compile Include="Converters\TransactionUserTypeConverter.cs" />
-    <Compile Include="DwollaAPI\AccountInformationResult.cs" />
-    <Compile Include="DwollaAPI\AccountInformationType.cs" />
-    <Compile Include="DwollaAPI\BankProcessingType.cs" />
-    <Compile Include="DwollaAPI\BasicInformationResult.cs" />
-    <Compile Include="DwollaAPI\ContactsResult.cs" />
-    <Compile Include="DwollaAPI\ContactType.cs" />
-    <Compile Include="DwollaAPI\DeserializeException.cs" />
-    <Compile Include="DwollaAPI\DwollaAPIException.cs" />
-    <Compile Include="DwollaAPI\DwollaServiceException.cs" />
-    <Compile Include="DwollaAPI\FundingSourcesListingResult.cs" />
-    <Compile Include="DwollaAPI\NearbyResult.cs" />
+    <Compile Include="Dwolla\AccountInformationResult.cs" />
+    <Compile Include="Dwolla\AccountInformationType.cs" />
+    <Compile Include="Dwolla\BankProcessingType.cs" />
+    <Compile Include="Dwolla\BasicInformationResult.cs" />
+    <Compile Include="Dwolla\ContactsResult.cs" />
+    <Compile Include="Dwolla\ContactType.cs" />
+    <Compile Include="Dwolla\DeserializeException.cs" />
+    <Compile Include="Dwolla\DwollaApiException.cs" />
+    <Compile Include="Dwolla\DwollaServiceException.cs" />
+    <Compile Include="Dwolla\FundingSourcesListingResult.cs" />
+    <Compile Include="Dwolla\NearbyResult.cs" />
     <Compile Include="Enumeration.Generic.cs" />
     <Compile Include="Enumeration.cs" />
-    <Compile Include="DwollaAPI\RegisterUserResponse.cs" />
-    <Compile Include="DwollaAPI\ResultObject.cs" />
-    <Compile Include="DwollaAPI\Scope.cs" />
-    <Compile Include="DwollaAPI\TransactionsResult.cs" />
-    <Compile Include="DwollaAPI\TransactionsStatsResult.cs" />
-    <Compile Include="DwollaAPI\TransactionStatusType.cs" />
-    <Compile Include="DwollaAPI\TransactionStatsType.cs" />
-    <Compile Include="DwollaAPI\TransactionType.cs" />
-    <Compile Include="DwollaAPI\UserType.cs" />
+    <Compile Include="Dwolla\RegisterUserResponse.cs" />
+    <Compile Include="Dwolla\ResultObject.cs" />
+    <Compile Include="Dwolla\Scope.cs" />
+    <Compile Include="Dwolla\TransactionsResult.cs" />
+    <Compile Include="Dwolla\TransactionsStatsResult.cs" />
+    <Compile Include="Dwolla\TransactionStatusType.cs" />
+    <Compile Include="Dwolla\TransactionStatsType.cs" />
+    <Compile Include="Dwolla\TransactionType.cs" />
+    <Compile Include="Dwolla\UserType.cs" />
     <Compile Include="DwollaClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenManager.cs" />

@@ -1,4 +1,4 @@
-﻿﻿//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="EnUSDateTimeConverter.cs">
 // Copyright (c) 2012 Corey Oliver
 //
@@ -25,20 +25,15 @@
 
 using System;
 using System.Globalization;
-using Newtonsoft.Json.Utilities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace Dwolla.API.Converters
+namespace DwollaApi.Converters
 {
-    using System;
-    using System.Globalization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using Newtonsoft.Json.Utilities;
-
     /// <summary>
     /// Converts a date-string in standard en-US (e.g. 8/29/2011 1:17:35 PM) to a <see cref="DateTime"/> to standard en-US.
     /// </summary>
-    public class EnUSDateTimeConverter : DateTimeConverterBase
+    public class EnUsDateTimeConverter : DateTimeConverterBase
     {
         internal static bool IsNullable(Type t)
         {
@@ -62,7 +57,7 @@ namespace Dwolla.API.Converters
                 throw new ArgumentNullException("t");
             }
 
-            return (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>));
+            return (t.IsGenericType && t.GetGenericTypeDefinition() == typeof (Nullable<>));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -78,23 +73,27 @@ namespace Dwolla.API.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+                                        JsonSerializer serializer)
         {
             bool nullable = IsNullableType(objectType);
             Type t = (nullable)
-              ? Nullable.GetUnderlyingType(objectType)
-              : objectType;
+                         ? Nullable.GetUnderlyingType(objectType)
+                         : objectType;
 
             if (reader.TokenType == JsonToken.Null)
             {
                 if (!IsNullableType(objectType))
-                    throw new Exception(string.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.", objectType));
+                    throw new Exception(string.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.",
+                                                      objectType));
 
                 return null;
             }
 
             if (reader.TokenType != JsonToken.String)
-                throw new Exception(string.Format(CultureInfo.InvariantCulture, "Unexpected token parsing date. Expected String, got {0}.", reader.TokenType));
+                throw new Exception(string.Format(CultureInfo.InvariantCulture,
+                                                  "Unexpected token parsing date. Expected String, got {0}.",
+                                                  reader.TokenType));
 
             string dateText = reader.Value.ToString();
 
@@ -102,13 +101,13 @@ namespace Dwolla.API.Converters
                 return null;
 
 #if !PocketPC && !NET20
-            if (t == typeof(DateTimeOffset))
+            if (t == typeof (DateTimeOffset))
             {
-                    return DateTimeOffset.Parse(dateText);
+                return DateTimeOffset.Parse(dateText);
             }
 #endif
 
-             return DateTime.Parse(dateText);
+            return DateTime.Parse(dateText);
         }
     }
 }

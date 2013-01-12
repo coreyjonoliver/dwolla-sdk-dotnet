@@ -23,14 +23,14 @@
 // <author>iron9light@gmail.com</author>
 //-----------------------------------------------------------------------
 
-namespace Dwolla.API
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 
+namespace DwollaApi
+{
     /// <summary>
     /// The enumeration. Provide more static methods and properties for every concrete enumeration.
     /// </summary>
@@ -38,7 +38,7 @@ namespace Dwolla.API
     public abstract class Enumeration<T> : Enumeration, IEquatable<T>
         where T : Enumeration<T>
     {
-        private static IDictionary<string, T> dictionary;
+        private static IDictionary<string, T> _dictionary;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Enumeration&lt;T&gt;"/> class.
@@ -68,18 +68,11 @@ namespace Dwolla.API
             get
             {
                 Initialize();
-                return dictionary;
+                return _dictionary;
             }
         }
 
-        /// <summary>
-        /// Gets all enumerations.
-        /// </summary>
-        /// <returns>All enumerations</returns>
-        public static ICollection<T> GetEnums()
-        {
-            return Dictionary.Values;
-        }
+        #region IEquatable<T> Members
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -95,7 +88,18 @@ namespace Dwolla.API
                 return false;
             }
 
-            return this.Value == other.Value;
+            return Value == other.Value;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets all enumerations.
+        /// </summary>
+        /// <returns>All enumerations</returns>
+        public static ICollection<T> GetEnums()
+        {
+            return Dictionary.Values;
         }
 
         /// <summary>
@@ -103,24 +107,25 @@ namespace Dwolla.API
         /// </summary>
         protected static void Initialize()
         {
-            if (dictionary == null)
+            if (_dictionary == null)
             {
-                dictionary = new Dictionary<string, T>();
+                _dictionary = new Dictionary<string, T>();
 
-                var type = typeof(T);
+                Type type = typeof (T);
 
-                var enums =
+                IEnumerable<T> enums =
                     from fieldInfo in
                         type.GetFields(
-                        BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.GetField)
+                            BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly |
+                            BindingFlags.GetField)
                     where fieldInfo.FieldType.IsAssignableFrom(type)
                     select fieldInfo.GetValue(null) as T;
 
-                foreach (var @enum in enums)
+                foreach (T @enum in enums)
                 {
                     Debug.Assert(@enum != null, "enum cannot be null.");
 
-                    dictionary[@enum.Value] = @enum;
+                    _dictionary[@enum.Value] = @enum;
                 }
             }
         }
